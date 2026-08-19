@@ -5,14 +5,11 @@ const btnRollEl = document.querySelector('.btn--roll');
 const btnHoldEl = document.querySelector('.btn--hold');
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
-const livePlayer = document.querySelector('.player--active');
 const score0El = document.querySelector('#score--0');
 const score1El = document.getElementById('score--1');
 const current0El = document.getElementById('current--0');
 const current1El = document.getElementById('current--1');
 const btnNewEl = document.querySelector('.btn--new');
-
-document.querySelector(`player--${activePlayer}`).classList.add('.winner')
 
 // starting conditions
 diceEl.classList.add('hidden');
@@ -22,6 +19,16 @@ let playing = true;
 let activePlayer = 0;
 let scores = [0,0];
 let currentScore = 0;
+
+// switch players functionality
+const switchPlayer = function() {
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    player0El.classList.toggle('player--active');
+    player1El.classList.toggle('player--active');
+    currentScore = 0;
+    diceEl.classList.add('hidden');
+    activePlayer = activePlayer === 0 ? 1 : 0; //condition ? valueIfTrue : valueIfFalse
+};
 
 // rolling dice functionality
 btnRollEl.addEventListener('click', function(){
@@ -44,15 +51,6 @@ btnRollEl.addEventListener('click', function(){
     };
 });
 
-// switch players functionality
-const switchPlayer = function() {
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    player0El.classList.toggle('player--active');
-    player1El.classList.toggle('player--active');
-    currentScore = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0; //condition ? valueIfTrue : valueIfFalse
-};
-
 // hold button functionality
 btnHoldEl.addEventListener('click', function(){
     if(playing){
@@ -62,12 +60,13 @@ btnHoldEl.addEventListener('click', function(){
         
         document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
         // 2. Check if player's score >= 100
-        if(scores[activePlayer] >= 10){
+        if(scores[activePlayer] >= 100){
             playing = false;
             
-            livePlayer.classList.add('player--winner');
+            document.querySelector(`.player--${activePlayer}`).classList.add('player--winner')
             
         } else {
+            diceEl.classList.add('hidden');
             switchPlayer();
         };
     };
@@ -76,7 +75,7 @@ btnHoldEl.addEventListener('click', function(){
 // start the game over
 btnNewEl.addEventListener('click', function(){
     diceEl.classList.add('hidden');
-    livePlayer.classList.remove('player--winner');
+    document.querySelector(`.player--${activePlayer}`).classList.remove('player--winner')
     player0El.classList.add('player--active');
     player1El.classList.remove('player--active');//Not using . because that would try to add a whole new class named .player--active
     playing = true;
