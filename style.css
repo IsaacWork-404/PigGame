@@ -16,10 +16,16 @@ body {
   font-weight: 400;
   height: 100vh;
   color: #333;
-  background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+  background-image: linear-gradient(to top left, pink 0%, #bf2e34 100%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+h1 {
+  margin-bottom: 2rem;
+  font-size: xx-large
 }
 
 /* LAYOUT */
